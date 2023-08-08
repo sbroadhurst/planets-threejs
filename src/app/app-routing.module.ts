@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { CanvasComponent } from './components/canvas/canvas.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'canvas' },
-  { path: 'canvas', component: CanvasComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'demo' },
+  { path: 'demo', component: CanvasComponent },
 ];
 
 @NgModule({

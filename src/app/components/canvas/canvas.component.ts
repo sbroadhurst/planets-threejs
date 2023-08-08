@@ -1,12 +1,11 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
-  NgtArgs,
-  NgtBeforeRenderEvent,
-  NgtCanvas,
-  NgtStore,
-  extend,
-} from 'angular-three';
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  inject,
+  Input,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NgtArgs, NgtCanvas, NgtStore, extend } from 'angular-three';
 import { OrbitControls } from 'three-stdlib';
 import * as THREE from 'three';
 import { DemoCubeComponent } from '../demo-cube/demo-cube.component';
@@ -20,8 +19,16 @@ extend({ OrbitControls });
     <ngt-spot-light [position]="10" [angle]="0.15" [penumbra]="1" />
     <ngt-point-light [position]="-10" />
 
-    <app-demo-cube [position]="[1.5, 0, 0]" />
-    <app-demo-cube [position]="[-1.5, 0, 0]" />
+    <app-demo-cube
+      [position]="[1.5, 0, 0]"
+      [rotationX]="0.01"
+      [rotationY]="0.08"
+    />
+    <app-demo-cube
+      [position]="[-1.5, 0, 0]"
+      [rotationX]="0.05"
+      [rotationY]="0.02"
+    />
 
     <ngt-orbit-controls *args="[camera, glDom]" [enableDamping]="true" />
   `,
@@ -32,10 +39,6 @@ export class SceneGraph {
   private readonly store = inject(NgtStore);
   readonly camera = this.store.get('camera');
   readonly glDom = this.store.get('gl', 'domElement');
-
-  onBeforeRender(event: NgtBeforeRenderEvent<THREE.Mesh>) {
-    event.object.rotation.x += 0.01;
-  }
 }
 
 @Component({

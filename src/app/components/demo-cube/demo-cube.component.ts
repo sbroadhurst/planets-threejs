@@ -17,8 +17,11 @@ export class DemoCubeComponent {
   active = false;
   hovered = false;
   @Input() position = [0, 0, 0];
+  @Input() rotationX: number = 0;
+  @Input() rotationY: number = 0;
 
   onBeforeRender(event: NgtBeforeRenderEvent<THREE.Mesh>) {
-    event.object.rotation.x += 0.01;
+    event.object.rotation.x += this.rotationX;
+    event.object.rotation.y += this.rotationY;
   }
 }
