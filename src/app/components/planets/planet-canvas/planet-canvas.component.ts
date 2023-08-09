@@ -14,7 +14,11 @@ extend({ OrbitControls });
     <ngt-spot-light [position]="10" [angle]="0.15" [penumbra]="1" />
     <ngt-point-light [position]="-10" />
 
-    <app-planet></app-planet>
+    <app-planet
+      [position]="[0, 0, 0]"
+      [rotationX]="0.05"
+      [rotationY]="0.02"
+    ></app-planet>
 
     <ngt-orbit-controls *args="[camera, glDom]" [enableDamping]="true" />
   `,
