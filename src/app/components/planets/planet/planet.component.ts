@@ -6,14 +6,14 @@ import * as THREE from 'three';
 
 extend(THREE);
 @Component({
-  selector: 'app-demo-cube',
+  selector: 'app-planet',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './demo-cube.component.html',
-  styleUrls: ['./demo-cube.component.css'],
+  templateUrl: './planet.component.html',
+  styleUrls: ['./planet.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class DemoCubeComponent {
+export class PlanetComponent {
   active = false;
   hovered = false;
   @Input() position = [0, 0, 0];
