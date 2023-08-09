@@ -20,6 +20,13 @@ export class PlanetComponent {
   @Input() rotationX: number = 0;
   @Input() rotationY: number = 0;
 
+  loader = new THREE.TextureLoader();
+  texture: string = 'assets/planets/mars/8k_mars.jpg';
+
+  material = new THREE.MeshBasicMaterial({
+    map: this.loader.load(this.texture),
+  });
+
   onBeforeRender(event: NgtBeforeRenderEvent<THREE.Mesh>) {
     event.object.rotation.x += this.rotationX;
     event.object.rotation.y += this.rotationY;

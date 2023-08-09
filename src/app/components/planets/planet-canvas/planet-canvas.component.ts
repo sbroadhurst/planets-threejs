@@ -1,4 +1,10 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  Input,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgtArgs, NgtCanvas, NgtStore, extend } from 'angular-three';
 import { OrbitControls } from 'three-stdlib';
@@ -14,22 +20,21 @@ extend({ OrbitControls });
     <ngt-spot-light [position]="10" [angle]="0.15" [penumbra]="1" />
     <ngt-point-light [position]="-10" />
 
-    <app-planet
-      [position]="[0, 0, 0]"
-      [rotationX]="0.05"
-      [rotationY]="0.02"
-    ></app-planet>
+    <app-planet [position]="[0, 0, 0]" [rotationX]="0.0" [rotationY]="0.01" />
 
     <ngt-orbit-controls *args="[camera, glDom]" [enableDamping]="true" />
   `,
-  imports: [PlanetComponent, CommonModule, NgtArgs],
+  imports: [PlanetComponent, NgtArgs],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  styleUrls: ['./planet-canvas.component.css'],
 })
-export class PlanetSceneGraph {
+export class SceneGraph implements OnInit {
+  // private background: string = 'assets/8k_stars.jpg';
   private readonly store = inject(NgtStore);
   readonly camera = this.store.get('camera');
   readonly glDom = this.store.get('gl', 'domElement');
+  ngOnInit(): void {
+    console.log();
+  }
 }
 
 @Component({
@@ -40,5 +45,5 @@ export class PlanetSceneGraph {
   styleUrls: ['./planet-canvas.component.css'],
 })
 export class PlanetCanvasComponent {
-  readonly SceneGraph = PlanetSceneGraph;
+  SceneGraph = SceneGraph;
 }
