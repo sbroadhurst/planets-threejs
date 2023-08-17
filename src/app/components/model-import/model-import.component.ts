@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { GLTFLoader, OrbitControls } from 'three-stdlib';
 import * as THREE from 'three';
 import { extend } from 'angular-three';
+import { GUI } from 'dat.gui';
 
 extend(THREE);
 extend({ OrbitControls });
@@ -30,6 +31,12 @@ export class ModelImportComponent implements OnInit, AfterViewInit {
   private loader = new GLTFLoader();
   private renderer!: THREE.WebGLRenderer;
   // private scene!: THREE.Scene
+  private gui = new GUI();
+  private objectFolder = this.gui.addFolder('Object');
+  private cameraFolder = this.gui.addFolder('Camera');
+  private o = {
+    objectToRender: 'dino',
+  };
 
   // Scene
   private scene = new THREE.Scene();
@@ -73,6 +80,20 @@ export class ModelImportComponent implements OnInit, AfterViewInit {
   }
 
   private createScene() {
+    // GUI initialize
+    this.gui.removeFolder(this.objectFolder);
+    this.objectFolder = this.gui.addFolder('Object');
+    this.gui.removeFolder(this.cameraFolder);
+    this.cameraFolder = this.gui.addFolder('Camera');
+
+    const options = ['eye', 'dino'];
+    this.objectFolder
+      .add(this.o, 'objectToRender', options)
+      .onChange((value) => {
+        this.objectToRender = value;
+        this.createScene();
+      });
+
     // document
     //   .getElementById('container3D')
     //   ?.appendChild(this.renderer.domElement);
@@ -87,6 +108,11 @@ export class ModelImportComponent implements OnInit, AfterViewInit {
       1000
     );
     this.camera.position.z = this.objectToRender === 'dino' ? 25 : 500;
+
+    // Camera GUI
+    this.cameraFolder.add(this.camera.position, 'x', -20, 20);
+    this.cameraFolder.add(this.camera.position, 'y', -20, 20);
+    this.cameraFolder.add(this.camera.position, 'z', 0, 250);
 
     this.topLight = new THREE.AmbientLight(
       0x333333,
@@ -109,6 +135,9 @@ export class ModelImportComponent implements OnInit, AfterViewInit {
       function (gltf: any) {
         that.object = gltf.scene;
         that.scene.add(that.object);
+        that.objectFolder.add(that.object.rotation, 'x', 0, Math.PI * 2);
+        that.objectFolder.add(that.object.rotation, 'y', 0, Math.PI * 2);
+        that.objectFolder.add(that.object.rotation, 'z', 0, Math.PI * 2);
       },
       function (xhr: any) {
         // while loading log the progress
