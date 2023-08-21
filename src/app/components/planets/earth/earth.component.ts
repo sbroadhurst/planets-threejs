@@ -16,7 +16,11 @@ import atmosphereVertexShader from './shaders/atmosphereVertex.glsl';
 // @ts-ignore
 import atmoshpereFragmentShader from './shaders/atmosphereFragment.glsl';
 import gsap from 'gsap';
+// import { GUI } from 'dat.gui';
+import { extend } from 'angular-three';
+import { OrbitControls } from 'three-stdlib';
 
+extend({ OrbitControls });
 @Component({
   selector: 'app-earth',
   standalone: true,
@@ -44,10 +48,12 @@ export class EarthComponent implements OnInit, AfterViewInit {
   private group = new THREE.Group();
   private starGeometry = new THREE.BufferGeometry();
 
+  // private gui = new GUI();
+  // private cameraFolder = this.gui.addFolder('Camera');
+
   mouseX = window.innerWidth / 2;
   mouseY = window.innerHeight / 2;
-
-  // private topLight: THREE.AmbientLight = new THREE.AmbientLight();
+  // controls: any;
 
   ngOnInit(): void {
     // makes the earth move on mouse move
@@ -125,6 +131,11 @@ export class EarthComponent implements OnInit, AfterViewInit {
     this.scene.add(stars);
 
     this.camera.position.z = 15;
+
+    // Camera GUI
+    // this.cameraFolder.add(this.camera.position, 'x', -5, 5);
+    // this.cameraFolder.add(this.camera.position, 'y', -5, 5);
+    // this.cameraFolder.add(this.camera.position, 'z', 15, 100);
   }
 
   private startRenderingLoop() {
@@ -138,6 +149,7 @@ export class EarthComponent implements OnInit, AfterViewInit {
       this.canvasContainer.offsetWidth,
       this.canvasContainer.offsetHeight
     );
+    // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
     let that = this;
     //   Start the 3D rendering
