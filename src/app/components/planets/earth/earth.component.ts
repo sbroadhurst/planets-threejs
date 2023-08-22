@@ -44,6 +44,7 @@ export class EarthComponent implements OnInit, AfterViewInit {
   private camera = new THREE.PerspectiveCamera();
   private renderer = new THREE.WebGLRenderer();
   private earth = new THREE.Mesh();
+  private moon = new THREE.Mesh();
   private atmosphere = new THREE.Mesh();
   private clouds = new THREE.Mesh();
 
@@ -56,6 +57,10 @@ export class EarthComponent implements OnInit, AfterViewInit {
   mouseX = window.innerWidth / 2;
   mouseY = window.innerHeight / 2;
   // controls: any;
+  // radius and revolution of the moon around the earth
+  revolutionRadius: number = 10;
+  theta: number = 0;
+  dTheta: number = (2 * Math.PI) / 1000;
 
   ngOnInit(): void {
     // makes the earth move on mouse move
@@ -109,6 +114,7 @@ export class EarthComponent implements OnInit, AfterViewInit {
         vertexShader: atmosphereVertexShader,
         fragmentShader: atmoshpereFragmentShader,
         blending: THREE.AdditiveBlending,
+        transparent: true,
         side: THREE.BackSide,
       })
     );
@@ -135,8 +141,33 @@ export class EarthComponent implements OnInit, AfterViewInit {
       })
     );
     this.clouds.scale.set(1.01, 1.01, 1.01);
-    this.group.add(this.clouds);
 
+    // moon
+    this.moon = new THREE.Mesh(
+      new THREE.SphereGeometry(1.25, 12.5, 12.5),
+      new THREE.ShaderMaterial({
+        vertexShader,
+        fragmentShader,
+        uniforms: {
+          globeTexture: {
+            value: new THREE.TextureLoader().load(
+              'assets/planets/earth/moon_map.jpg'
+            ),
+          },
+          transparent: {
+            value: 1,
+          },
+        },
+      })
+    );
+    this.moon.position.x = -8;
+    this.moon.position.y = 0;
+
+    var moonPivot = new THREE.Object3D();
+    this.earth.add(moonPivot);
+
+    this.scene.add(this.moon);
+    this.group.add(this.clouds);
     this.group.add(this.earth);
     this.scene.add(this.group);
 
@@ -185,7 +216,15 @@ export class EarthComponent implements OnInit, AfterViewInit {
       that.renderer.render(that.scene, that.camera);
       // HERE we can update the scene to add stuff like auto movement
       that.earth.rotation.y += 0.002;
+      that.moon.rotation.y += 0.001;
       that.clouds.rotation.y += 0.0025;
+
+      //Increment theta, and update moon x and y
+      //position based off new theta value
+      that.theta += that.dTheta;
+      that.moon.position.x = that.revolutionRadius * Math.cos(that.theta);
+      that.moon.position.z = that.revolutionRadius * Math.sin(that.theta);
+
       gsap.to(that.group.rotation, {
         x: (that.mouseY / innerHeight) * 2 - 1,
         y: (that.mouseX / innerWidth) * 2 + 1,
