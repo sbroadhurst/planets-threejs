@@ -4,6 +4,9 @@
   height: 100vh;
 }
 
+.text {
+  max-width: 500px;
+}
 .text-area {
   width: 50%;
   display: flex;
@@ -25,6 +28,7 @@
 
 .canvas {
   width: 50%;
+  min-width: 375px;
 }
 
 .button {
@@ -37,4 +41,25 @@
   padding-bottom: 1rem;
   border-radius: 50%;
   text-decoration: none;
+}
+
+/* On screens that are 650 or less, change the flex direction */
+@media screen and (max-width: 650px) {
+  .flex {
+    flex-direction: column;
+  }
+  .canvas {
+    width: 100% !important;
+    height: 50% !important;
+  }
+  .text {
+    max-width: 280px !important;
+  }
+  .text-area {
+    height: 50% !important;
+    width: 100% !important;
+    text-align: center;
+    align-items: center;
+    padding: 10px;
+  }
 }
