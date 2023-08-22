@@ -45,6 +45,8 @@ export class EarthComponent implements OnInit, AfterViewInit {
   private renderer = new THREE.WebGLRenderer();
   private earth = new THREE.Mesh();
   private atmosphere = new THREE.Mesh();
+  private clouds = new THREE.Mesh();
+
   private group = new THREE.Group();
   private starGeometry = new THREE.BufferGeometry();
 
@@ -89,6 +91,9 @@ export class EarthComponent implements OnInit, AfterViewInit {
               'assets/planets/earth/earth_daymap.jpg'
             ),
           },
+          transparent: {
+            value: 1,
+          },
         },
         // map: new THREE.TextureLoader().load(
         //   'assets/planets/earth/earth_daymap.jpg'
@@ -109,6 +114,28 @@ export class EarthComponent implements OnInit, AfterViewInit {
     );
     this.atmosphere.scale.set(1.2, 1.2, 1.2);
     this.scene.add(this.atmosphere);
+
+    // Clouds
+    this.clouds = new THREE.Mesh(
+      new THREE.SphereGeometry(5, 50, 50),
+      new THREE.ShaderMaterial({
+        vertexShader,
+        fragmentShader,
+        blending: THREE.AdditiveBlending,
+        uniforms: {
+          globeTexture: {
+            value: new THREE.TextureLoader().load(
+              'assets/planets/earth/earth_clouds.jpg'
+            ),
+          },
+          transparent: {
+            value: 0.5,
+          },
+        },
+      })
+    );
+    this.clouds.scale.set(1.01, 1.01, 1.01);
+    this.group.add(this.clouds);
 
     this.group.add(this.earth);
     this.scene.add(this.group);
@@ -157,7 +184,8 @@ export class EarthComponent implements OnInit, AfterViewInit {
       requestAnimationFrame(render);
       that.renderer.render(that.scene, that.camera);
       // HERE we can update the scene to add stuff like auto movement
-      that.earth.rotation.y += 0.003;
+      that.earth.rotation.y += 0.002;
+      that.clouds.rotation.y += 0.0025;
       gsap.to(that.group.rotation, {
         x: (that.mouseY / innerHeight) * 2 - 1,
         y: (that.mouseX / innerWidth) * 2 + 1,
