@@ -63,6 +63,18 @@ export class EarthComponent implements OnInit, AfterViewInit {
   dTheta: number = (2 * Math.PI) / 1000;
 
   ngOnInit(): void {
+    // Add listener to the window, so we can resize the window and the camera
+    let that = this;
+    window.addEventListener('resize', function () {
+      (that.camera.aspect =
+        that.canvasContainer.offsetWidth / that.canvasContainer.offsetHeight),
+        that.camera.updateProjectionMatrix();
+      that.renderer.setSize(
+        that.canvasContainer.offsetWidth,
+        that.canvasContainer.offsetHeight
+      );
+    });
+
     // makes the earth move on mouse move
     document.onmousemove = (e) => {
       this.mouseX = e.clientX;
