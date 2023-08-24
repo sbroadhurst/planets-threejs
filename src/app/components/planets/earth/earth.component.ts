@@ -8,23 +8,24 @@ import {
 import { CommonModule } from '@angular/common';
 import * as THREE from 'three';
 // @ts-ignore
-import vertexShader from './shaders/vertex.glsl';
+import vertexShader from '../shaders/vertex.glsl';
 // @ts-ignore
-import fragmentShader from './shaders/fragment.glsl';
+import fragmentShader from '../shaders/fragment.glsl';
 // @ts-ignore
-import atmosphereVertexShader from './shaders/atmosphereVertex.glsl';
+import atmosphereVertexShader from '../shaders/atmosphereVertex.glsl';
 // @ts-ignore
-import atmoshpereFragmentShader from './shaders/atmosphereFragment.glsl';
+import atmoshpereFragmentShader from '../shaders/atmosphereFragment.glsl';
 import gsap from 'gsap';
 // import { GUI } from 'dat.gui';
 import { extend } from 'angular-three';
 import { OrbitControls } from 'three-stdlib';
+import { TextAreaComponent } from '../../text-area/text-area.component';
 
 extend({ OrbitControls });
 @Component({
   selector: 'app-earth',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TextAreaComponent],
   templateUrl: './earth.component.html',
   styleUrls: ['./earth.component.css'],
 })

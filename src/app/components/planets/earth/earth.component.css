@@ -4,9 +4,11 @@
   height: 100vh;
 }
 
-.text {
-  max-width: 500px;
+.canvas {
+  width: 60%;
+  min-width: 375px;
 }
+
 .text-area {
   width: 40%;
   display: flex;
@@ -18,30 +20,6 @@
   color: white;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
-.subtext {
-  color: gray;
-}
-.quote {
-  font-size: 0.55rem;
-  margin-bottom: 2rem;
-}
-
-.canvas {
-  width: 60%;
-  min-width: 375px;
-}
-
-.button {
-  color: white;
-  background: darkgreen;
-  display: inline-block;
-  padding-right: 2rem;
-  padding-left: 2rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  border-radius: 50%;
-  text-decoration: none;
-}
 
 /* On screens that are 650 or less, change the flex direction */
 @media screen and (max-width: 650px) {
@@ -51,9 +29,6 @@
   .canvas {
     width: 100% !important;
     height: 50% !important;
-  }
-  .text {
-    max-width: 280px !important;
   }
   .text-area {
     height: 50% !important;

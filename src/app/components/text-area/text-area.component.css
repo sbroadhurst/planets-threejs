@@ -1,0 +1,30 @@
+.text {
+  max-width: 500px;
+}
+
+.subtext {
+  color: gray;
+}
+.quote {
+  font-size: 0.55rem;
+  margin-bottom: 2rem;
+}
+
+.button {
+  color: white;
+  background: darkgreen;
+  display: inline-block;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 50%;
+  text-decoration: none;
+}
+
+/* On screens that are 650 or less, change the flex direction */
+@media screen and (max-width: 650px) {
+  .text {
+    max-width: 280px !important;
+  }
+}
