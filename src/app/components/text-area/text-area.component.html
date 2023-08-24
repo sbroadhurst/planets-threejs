@@ -1,12 +1,9 @@
 <div class="text">
-  <h1>EARTH, THE FIRST FRONTIER</h1>
+  <h1>{{ planetInfo.planet.englishName }}</h1>
   <p class="subtext">
-    Modern science says: 'The sun is the past, the earth is the present, the
-    moon is the future.' From an incandescent mass we have originated, and into
-    a frozen mass we shall turn. Merciless is the law of nature, and rapidly and
-    irresistibly we are drawn to our doom.
+    {{ planetInfo.planet.quote }}
   </p>
-  <p class="quote subtext">- Nikola Tesla</p>
+  <p class="quote subtext">- {{ planetInfo.planet.quotee }}</p>
 </div>
 <div>
   <a href="" class="button">Learn More</a>

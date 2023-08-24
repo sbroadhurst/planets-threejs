@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'demo', component: CanvasComponent },
   { path: 'planets', component: PlanetCanvasComponent },
   { path: 'import', component: ModelImportComponent },
-  { path: 'earth', component: EarthComponent },
+  { path: 'planets/:id', component: EarthComponent },
 ];
 
 @NgModule({
