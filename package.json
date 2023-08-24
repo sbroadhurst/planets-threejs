@@ -18,7 +18,7 @@
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
-    "angular-three": "^1.10.6",
+    "angular-three": "^1.10.7",
     "gsap": "^3.12.2",
     "rxjs": "~7.8.0",
     "three": "^0.152.2",
