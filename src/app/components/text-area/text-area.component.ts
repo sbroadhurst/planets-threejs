@@ -53,5 +53,6 @@ export class TextAreaComponent implements OnInit {
   selectNewPlanet(id: string): void {
     this.planetId = id;
     this.getPlanetInformation();
+    this.router.navigate([`planets/${id}`]);
   }
 }
