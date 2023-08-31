@@ -22,7 +22,6 @@ import { OrbitControls } from 'three-stdlib';
 import { TextAreaComponent } from '../../text-area/text-area.component';
 
 extend({ OrbitControls });
-
 @Component({
   selector: 'app-saturn',
   standalone: true,
