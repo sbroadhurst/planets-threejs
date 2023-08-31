@@ -30,7 +30,7 @@ extend({ OrbitControls });
   templateUrl: './saturn.component.html',
   styleUrls: ['./saturn.component.css'],
 })
-export class SaturnComponent {
+export class SaturnComponent implements OnInit, AfterViewInit {
   @ViewChild('canvas') private canvasRef: ElementRef = new ElementRef('canvas');
   @ViewChild('canvasContainer') private canvasContainerRef: ElementRef =
     new ElementRef('canvasContainer');
