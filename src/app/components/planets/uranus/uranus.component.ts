@@ -23,13 +23,13 @@ import { TextAreaComponent } from '../../text-area/text-area.component';
 
 extend({ OrbitControls });
 @Component({
-  selector: 'app-venus',
+  selector: 'app-uranus',
   standalone: true,
   imports: [CommonModule, TextAreaComponent],
-  templateUrl: './venus.component.html',
-  styleUrls: ['./venus.component.css'],
+  templateUrl: './uranus.component.html',
+  styleUrls: ['./uranus.component.css'],
 })
-export class VenusComponent implements OnInit, AfterViewInit {
+export class UranusComponent implements OnInit, AfterViewInit {
   @ViewChild('canvas') private canvasRef: ElementRef = new ElementRef('canvas');
   @ViewChild('canvasContainer') private canvasContainerRef: ElementRef =
     new ElementRef('canvasContainer');
@@ -44,9 +44,8 @@ export class VenusComponent implements OnInit, AfterViewInit {
   private scene = new THREE.Scene();
   private camera = new THREE.PerspectiveCamera();
   private renderer = new THREE.WebGLRenderer();
-  private venus = new THREE.Mesh();
+  private uranus = new THREE.Mesh();
   private atmosphere = new THREE.Mesh();
-  private clouds = new THREE.Mesh();
 
   private group = new THREE.Group();
   private starGeometry = new THREE.BufferGeometry();
@@ -71,7 +70,7 @@ export class VenusComponent implements OnInit, AfterViewInit {
       );
     });
 
-    // makes the venus move on mouse move
+    // makes the uranus move on mouse move
     document.onmousemove = (e) => {
       this.mouseX = e.clientX;
       this.mouseY = e.clientY;
@@ -92,8 +91,8 @@ export class VenusComponent implements OnInit, AfterViewInit {
       1000
     );
 
-    // add the venus
-    this.venus = new THREE.Mesh(
+    // add the uranus
+    this.uranus = new THREE.Mesh(
       new THREE.SphereGeometry(5, 50, 50),
       new THREE.ShaderMaterial({
         vertexShader,
@@ -101,7 +100,7 @@ export class VenusComponent implements OnInit, AfterViewInit {
         uniforms: {
           globeTexture: {
             value: new THREE.TextureLoader().load(
-              'assets/planets/venus/venus_surface.jpg'
+              'assets/planets/uranus/uranus_map.jpg'
             ),
           },
           transparent: {
@@ -110,7 +109,7 @@ export class VenusComponent implements OnInit, AfterViewInit {
         },
       })
     );
-    // this.scene.add(this.venus);
+    // this.scene.add(this.uranus);
 
     // add atmoshpere
     this.atmosphere = new THREE.Mesh(
@@ -122,36 +121,14 @@ export class VenusComponent implements OnInit, AfterViewInit {
         transparent: true,
         side: THREE.BackSide,
         uniforms: {
-          rgb: { value: new THREE.Vector3(1.55, 0.98, 0) },
+          rgb: { value: new THREE.Vector3(0.435, 0.57, 0.585) },
         },
       })
     );
     this.atmosphere.scale.set(1.2, 1.2, 1.2);
     this.scene.add(this.atmosphere);
 
-    // Clouds
-    this.clouds = new THREE.Mesh(
-      new THREE.SphereGeometry(5, 50, 50),
-      new THREE.ShaderMaterial({
-        vertexShader,
-        fragmentShader,
-        blending: THREE.AdditiveBlending,
-        uniforms: {
-          globeTexture: {
-            value: new THREE.TextureLoader().load(
-              'assets/planets/venus/venus_atmosphere.jpg'
-            ),
-          },
-          transparent: {
-            value: 0.4,
-          },
-        },
-      })
-    );
-    this.clouds.scale.set(1.01, 1.01, 1.01);
-
-    this.group.add(this.clouds);
-    this.group.add(this.venus);
+    this.group.add(this.uranus);
     this.scene.add(this.group);
 
     // Background
@@ -198,8 +175,7 @@ export class VenusComponent implements OnInit, AfterViewInit {
       requestAnimationFrame(render);
       that.renderer.render(that.scene, that.camera);
       // HERE we can update the scene to add stuff like auto movement
-      that.venus.rotation.y -= 0.002;
-      that.clouds.rotation.y += 0.009;
+      that.uranus.rotation.y -= 0.002;
 
       gsap.to(that.group.rotation, {
         x: (that.mouseY / innerHeight) * 2 - 1,

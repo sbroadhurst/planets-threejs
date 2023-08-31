@@ -107,9 +107,6 @@ export class MarsComponent implements OnInit, AfterViewInit {
             value: 1,
           },
         },
-        // map: new THREE.TextureLoader().load(
-        //   'assets/planets/mars/mars_daymap.jpg'
-        // ),
       })
     );
     // this.scene.add(this.mars);
@@ -124,7 +121,6 @@ export class MarsComponent implements OnInit, AfterViewInit {
         transparent: true,
         side: THREE.BackSide,
         uniforms: {
-          // rgb: { value: new THREE.Vector3(0.92, 1.1, 1.18) },
           rgb: { value: new THREE.Vector3(1.09, 0.59, 0) },
         },
       })
