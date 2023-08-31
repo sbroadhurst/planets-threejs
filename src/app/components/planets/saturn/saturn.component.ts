@@ -22,14 +22,15 @@ import { OrbitControls } from 'three-stdlib';
 import { TextAreaComponent } from '../../text-area/text-area.component';
 
 extend({ OrbitControls });
+
 @Component({
-  selector: 'app-earth',
+  selector: 'app-saturn',
   standalone: true,
   imports: [CommonModule, TextAreaComponent],
-  templateUrl: './earth.component.html',
-  styleUrls: ['./earth.component.css'],
+  templateUrl: './saturn.component.html',
+  styleUrls: ['./saturn.component.css'],
 })
-export class EarthComponent implements OnInit, AfterViewInit {
+export class SaturnComponent {
   @ViewChild('canvas') private canvasRef: ElementRef = new ElementRef('canvas');
   @ViewChild('canvasContainer') private canvasContainerRef: ElementRef =
     new ElementRef('canvasContainer');
@@ -44,10 +45,8 @@ export class EarthComponent implements OnInit, AfterViewInit {
   private scene = new THREE.Scene();
   private camera = new THREE.PerspectiveCamera();
   private renderer = new THREE.WebGLRenderer();
-  private earth = new THREE.Mesh();
-  private moon = new THREE.Mesh();
+  private saturn = new THREE.Mesh();
   private atmosphere = new THREE.Mesh();
-  private clouds = new THREE.Mesh();
 
   private group = new THREE.Group();
   private starGeometry = new THREE.BufferGeometry();
@@ -58,10 +57,6 @@ export class EarthComponent implements OnInit, AfterViewInit {
   mouseX = window.innerWidth / 2;
   mouseY = window.innerHeight / 2;
   // controls: any;
-  // radius and revolution of the moon around the earth
-  revolutionRadius: number = 10;
-  theta: number = 0;
-  dTheta: number = (2 * Math.PI) / 1000;
 
   ngOnInit(): void {
     // Add listener to the window, so we can resize the window and the camera
@@ -76,7 +71,7 @@ export class EarthComponent implements OnInit, AfterViewInit {
       );
     });
 
-    // makes the earth move on mouse move
+    // makes the saturn move on mouse move
     document.onmousemove = (e) => {
       this.mouseX = e.clientX;
       this.mouseY = e.clientY;
@@ -97,8 +92,8 @@ export class EarthComponent implements OnInit, AfterViewInit {
       1000
     );
 
-    // add the earth
-    this.earth = new THREE.Mesh(
+    // add the saturn
+    this.saturn = new THREE.Mesh(
       new THREE.SphereGeometry(5, 50, 50),
       new THREE.ShaderMaterial({
         vertexShader,
@@ -106,7 +101,7 @@ export class EarthComponent implements OnInit, AfterViewInit {
         uniforms: {
           globeTexture: {
             value: new THREE.TextureLoader().load(
-              'assets/planets/earth/earth_daymap.jpg'
+              'assets/planets/saturn/saturn_map.jpg'
             ),
           },
           transparent: {
@@ -114,11 +109,11 @@ export class EarthComponent implements OnInit, AfterViewInit {
           },
         },
         // map: new THREE.TextureLoader().load(
-        //   'assets/planets/earth/earth_daymap.jpg'
+        //   'assets/planets/saturn/saturn_daymap.jpg'
         // ),
       })
     );
-    // this.scene.add(this.earth);
+    // this.scene.add(this.saturn);
 
     // add atmoshpere
     this.atmosphere = new THREE.Mesh(
@@ -130,61 +125,14 @@ export class EarthComponent implements OnInit, AfterViewInit {
         transparent: true,
         side: THREE.BackSide,
         uniforms: {
-          rgb: { value: new THREE.Vector3(0.3, 0.6, 1.0) },
+          rgb: { value: new THREE.Vector3(0.97, 0.71, 0.11) },
         },
       })
     );
     this.atmosphere.scale.set(1.2, 1.2, 1.2);
     this.scene.add(this.atmosphere);
 
-    // Clouds
-    this.clouds = new THREE.Mesh(
-      new THREE.SphereGeometry(5, 50, 50),
-      new THREE.ShaderMaterial({
-        vertexShader,
-        fragmentShader,
-        blending: THREE.AdditiveBlending,
-        uniforms: {
-          globeTexture: {
-            value: new THREE.TextureLoader().load(
-              'assets/planets/earth/earth_clouds.jpg'
-            ),
-          },
-          transparent: {
-            value: 0.5,
-          },
-        },
-      })
-    );
-    this.clouds.scale.set(1.01, 1.01, 1.01);
-
-    // moon
-    this.moon = new THREE.Mesh(
-      new THREE.SphereGeometry(1.25, 12.5, 12.5),
-      new THREE.ShaderMaterial({
-        vertexShader,
-        fragmentShader,
-        uniforms: {
-          globeTexture: {
-            value: new THREE.TextureLoader().load(
-              'assets/planets/earth/moon_map.jpg'
-            ),
-          },
-          transparent: {
-            value: 1,
-          },
-        },
-      })
-    );
-    this.moon.position.x = -8;
-    this.moon.position.y = 0;
-
-    var moonPivot = new THREE.Object3D();
-    this.earth.add(moonPivot);
-
-    this.scene.add(this.moon);
-    this.group.add(this.clouds);
-    this.group.add(this.earth);
+    this.group.add(this.saturn);
     this.scene.add(this.group);
 
     // Background
@@ -231,15 +179,7 @@ export class EarthComponent implements OnInit, AfterViewInit {
       requestAnimationFrame(render);
       that.renderer.render(that.scene, that.camera);
       // HERE we can update the scene to add stuff like auto movement
-      that.earth.rotation.y += 0.002;
-      that.moon.rotation.y += 0.001;
-      that.clouds.rotation.y += 0.0025;
-
-      //Increment theta, and update moon x and y
-      //position based off new theta value
-      that.theta += that.dTheta;
-      that.moon.position.x = that.revolutionRadius * Math.cos(that.theta);
-      that.moon.position.z = that.revolutionRadius * Math.sin(that.theta);
+      that.saturn.rotation.y += 0.002;
 
       gsap.to(that.group.rotation, {
         x: (that.mouseY / innerHeight) * 2 - 1,
