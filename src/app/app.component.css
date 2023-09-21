@@ -1,0 +1,13 @@
+.selectors {
+  display: flex;
+  gap: 25px;
+  top: 0px;
+  margin: 1rem;
+  color: white;
+  flex-wrap: wrap;
+}
+
+.link {
+  cursor: pointer;
+  text-decoration: none;
+}
