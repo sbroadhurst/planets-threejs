@@ -13,10 +13,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { PlanetEffects } from './shared/store/planets/planets.effects';
 import { HttpClientModule } from '@angular/common/http';
 
-// import { bootstrapApplication } from '@angular/platform-browser';
-
-// bootstrapApplication(AppComponent);
-
 @NgModule({
   declarations: [AppComponent],
   imports: [

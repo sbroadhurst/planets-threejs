@@ -17,11 +17,10 @@ import atmosphereVertexShader from '../shaders/atmosphereVertex.glsl';
 import atmoshpereFragmentShader from '../shaders/atmosphereFragment.glsl';
 import gsap from 'gsap';
 // import { GUI } from 'dat.gui';
-import { extend } from 'angular-three';
 import { OrbitControls } from 'three-stdlib';
 import { TextAreaComponent } from '../../text-area/text-area.component';
 
-extend({ OrbitControls });
+// extend({ OrbitControls });
 @Component({
   selector: 'app-jupiter',
   standalone: true,

@@ -8,11 +8,9 @@ import {
 import { CommonModule } from '@angular/common';
 import { GLTFLoader, OrbitControls } from 'three-stdlib';
 import * as THREE from 'three';
-import { extend } from 'angular-three';
 import { GUI } from 'dat.gui';
 
-extend(THREE);
-extend({ OrbitControls });
+// extend({ OrbitControls });
 @Component({
   selector: 'app-model-import',
   standalone: true,
